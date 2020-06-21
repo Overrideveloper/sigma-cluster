@@ -1,0 +1,97 @@
+.menu {
+    width: max-content;
+    height: 100%;
+    padding: 3rem 0;
+    background-color: #1E1E1E;
+}
+
+.server-controls {
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+        outline: none;
+
+        img {
+            height: 48px;
+            width: 48px;
+            filter: invert(1);
+            margin-bottom: 0.7rem;
+        }
+
+        span {
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        &:first-of-type {
+            margin-right: 1rem;
+        }
+
+        &:last-of-type {
+            margin-left: 1rem;
+        }
+    }
+}
+
+.menu-label {
+    text-transform: capitalize;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 0 1.5rem;
+}
+
+.section-break {
+    height: 100px;
+}
+
+.app-list {
+    li {
+        &:not(:last-child) {
+            border-bottom: 1px solid #202020;
+        }
+    }
+}
+
+.menu-list-app {
+    background-color: #141414;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 0.3rem solid transparent;
+    padding: 0 0.3rem 0 0;
+
+    .app-name {
+        margin: 0 0 0 1.5rem;
+        font-size: 13px;
+        font-weight: 600;
+        color: white;
+        text-transform: capitalize;
+    }
+
+    .app-controls {
+        button {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            padding: 3px 3px 0;
+        }
+
+        img {
+            height: 22px;
+            width: 22px;
+            filter: invert(1);
+        }
+    }
+}

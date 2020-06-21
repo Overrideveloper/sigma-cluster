@@ -1,0 +1,7 @@
+<div class="app-main">
+    <h2 class="title">Server Canvas</h2>
+
+    <div class="cluster">
+        <div *ngFor="let server of servers" class="server" [id]="'server_' + server.id"></div>
+    </div>
+</div>

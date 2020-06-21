@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.main-flex {
+    display: flex;
+}
+
+button {
+    cursor: pointer;
+
+    &:hover {
+        filter: invert(0.5);
+    }
+}
+
+app-main {
+    width: 100%;
+}
