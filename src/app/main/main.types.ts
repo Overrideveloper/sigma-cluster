@@ -1,6 +1,7 @@
-import { IApp } from '../app.types';
+import { IServerApp } from '../app.types';
 
 export interface IServer {
     id: number;
-    apps: IApp[];
+    apps: IServerApp[];
+    modified: number;
 }
