@@ -7,6 +7,7 @@
 
 .close-btn-flex {
     display: flex;
+    visibility: hidden;
     align-items: center;
     justify-content: flex-end;
     margin: 0 0 2.2rem 0;
@@ -112,5 +113,11 @@
             width: 22px;
             filter: invert(1);
         }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .close-btn-flex {
+        visibility: visible !important;
     }
 }

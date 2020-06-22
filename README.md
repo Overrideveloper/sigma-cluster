@@ -1,4 +1,8 @@
 # SigmaCluster
+Angular 2+ Solution to Sigma Cloud's Frontend Developer Test (https://github.com/sigmacloud/frontend-developer-homework)
+
+## Deployed app
+[https://sigma-cluster.web.app](https://sigma-cluster.web.app)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.
 

@@ -59,7 +59,7 @@ export class MainComponent {
     menu.style.display = 'block';
   }
 
-  setAppBlockGradient(server_id: string, app_server_id: string, index: number, gradient: string) {
+  setAppBlockGradient(server_id: string, app_server_id: string, gradient: string) {
     const appBlock: HTMLDivElement = document.getElementById(`server_${server_id}_app_${app_server_id}`) as HTMLDivElement;
     appBlock.style.background = gradient;
   }
