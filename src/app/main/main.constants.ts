@@ -1,3 +1,4 @@
-import { IServer } from './main.types';
+import { IClusterIDRange } from './main.types';
 
-export const STARTING_SERVERS: IServer[] = [1, 2, 3, 4].map(id => ({ id, modified: Date.now(), apps: []}));
+export const SERVER_ID_RANGE: IClusterIDRange = { min: 1000, max: 1999 }
+export const APP_SERVER_ID_RANGE: IClusterIDRange = { min: 2000, max: 2999 }

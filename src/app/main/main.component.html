@@ -3,6 +3,13 @@
 
     <div class="cluster">
         <div *ngFor="let server of clusterServers" class="server" [id]="'server_' + server.id">
+            <div class="server-overlay">
+                <button (click)="removeServer(server.id)">
+                    <img src="../../assets/icons/minus-circle-line.svg" alt="destroy server">
+                    <span>Destroy</span>
+                </button>
+            </div>
+            
             <div *ngFor="let app of server.apps" class="server-app" [style.background]="app.color"
             [id]="'server_' + server.id + '_app_' + app.app_server_id">
                 {{setAppBlockGradient(server.id, app.app_server_id, app.gradient)}}

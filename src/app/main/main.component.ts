@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IServer } from './main.types';
-import { STARTING_SERVERS } from './main.constants';
 import { SERVER_OPERATIONS, APP_OPERATIONS } from '../app.subjects';
 import { IApp, IServerApp } from '../app.types';
+import { GET_SERVER_ID, SORT_LIST, GET_APP_SERVER_ID, GET_STARTING_SERVERS } from './main.utils';
 
 @Component({
   selector: 'app-main',
@@ -11,11 +11,10 @@ import { IApp, IServerApp } from '../app.types';
 })
 export class MainComponent {
   servers: IServer[] = [];
-  private nextServerID: number;
 
   constructor() {
     // Add servers to cluster sequentially with a 500ms delay between servers
-    STARTING_SERVERS.map((server, index) => setTimeout(() => this.servers.push(server), 500 * (index + 1)));
+    GET_STARTING_SERVERS().map((server, index) => setTimeout(() => this.servers.push(server), 500 * (index + 1)));
 
     // Listen for dispatched Server Operations => ADD | DESTROY
     SERVER_OPERATIONS.subscribe(operation => {
@@ -48,15 +47,10 @@ export class MainComponent {
           throw new Error("App Operation not specified");
       }
     });
-
-    this.nextServerID = STARTING_SERVERS.length + 1;
   }
 
   get clusterServers() {
-    return this.servers.sort((a, b) => {
-      const [A, B] = [a.id, b.id];
-      return B < A ? 1 : B > A ? -1 : 0;
-    });
+    return SORT_LIST<IServer>(this.servers, 'index', 'asc');
   }
 
   setAppBlockGradient(server_id: string, app_server_id: string, index: number, gradient: string) {
@@ -65,35 +59,40 @@ export class MainComponent {
   }
 
   private addServer() {
-    this.servers.push({ id: this.nextServerID, modified: Date.now(), apps: [] });
-    this.nextServerID += 1;
+    this.servers.push({ index: this.servers.length + 1, id: GET_SERVER_ID(), modified: Date.now(), apps: [] });
   }
 
-  private removeServer() {
-    const serverID = this.nextServerID - 1;
+  removeServer(id?: number) {
+    if (this.servers.length) {
+      let serverIndex = -1;
 
-    if (serverID) {
-      const serverIndex = this.servers.findIndex(server => server.id === serverID);
+      if (id) {
+        serverIndex = this.servers.findIndex(server => server.id === id); 
+      } else {
+        serverIndex = this.servers.findIndex(server => server.index === this.servers.length); 
+      }
 
       if (serverIndex > -1) {
-        const serverBlock: HTMLDivElement = document.getElementById(`server_${serverID}`) as HTMLDivElement;
+        const serverBlock: HTMLDivElement = document.getElementById(`server_${this.servers[serverIndex].id}`) as HTMLDivElement;
 
         serverBlock.classList.add('server__exit');
 
-        this.nextServerID = serverID;
-
-        setTimeout(() => this.servers.splice(serverIndex, 1), 700);
+        setTimeout(() => {
+          const orphanApps = this.servers.splice(serverIndex, 1)[0].apps;
+          orphanApps.map(app => this.startApp(app));
+        }, 700);
 
         return;
       }
 
-      throw new Error('Server cannot be located');
+      throw new Error('Server cannot be located'); 
     }
   }
 
   private startApp(app: IApp) {
+    const _app: IServerApp = { ...app, app_server_id: GET_APP_SERVER_ID(), started: Date.now() }
+
     let freeServer = this.servers.find(server => !server.apps.length);
-    const _app: IServerApp = { ...app, app_server_id: Math.floor(Math.random() * Math.floor(9999)), started: Date.now() }
 
     if (freeServer) {
       freeServer.apps.push(_app);
@@ -109,16 +108,10 @@ export class MainComponent {
   }
 
   private killApp(app: IApp) {
-    const tempServer = this.servers.sort((a, b) => {
-      const [A, B] = [a.modified, b.modified];
-      return B > A ? 1 : B < A ? -1 : 0;
-    }).find(server => server.apps.find(_app => _app.id === app.id));
+    const tempServer = SORT_LIST<IServer>(this.servers, 'modified', 'desc').find(server => server.apps.find(_app => _app.id === app.id));
 
     if (tempServer) {
-      const apps = tempServer.apps.sort((a, b) => {
-        const [A, B] = [a.started, b.started];
-        return B > A ? 1 : B < A ? -1 : 0;
-      });
+      const apps = SORT_LIST<IServerApp>(tempServer.apps, 'started', 'desc' );
 
       const tempAppIndex = apps.findIndex(_app => _app.id === app.id);
       const appServerID = apps[tempAppIndex].app_server_id;

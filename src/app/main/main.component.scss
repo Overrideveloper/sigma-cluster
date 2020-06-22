@@ -24,10 +24,49 @@
     border-radius: 4px;
     background-color: #1E1E1E;
     margin: 0 16px 20px 0;
+    position: relative;
     animation: ServerEnter 0.7s both;
+
+    .server-overlay {
+        height: 120px;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        animation: ServerOverlayEnter 0.7s both;
+        z-index: 9;
+        
+        button {
+            width: 100%;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            span {
+                color: white;
+                font-weight: 600;
+            }
+
+            img {
+                filter: invert(1);
+                margin: 0 0 0.5rem 0;
+            }
+        }
+    }
 
     &.server__exit {
         animation: ServerExit 0.7s both;
+    }
+
+    &:hover {
+        .server-overlay {
+            display: flex;
+        }
     }
 }
 
@@ -64,7 +103,7 @@
         color: rgba(0, 0, 0, 0.7);
     }
 
-    &:first-of-type {
+    &:nth-of-type(2) {
         &:not(:last-of-type) {
             border-top-right-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
@@ -72,7 +111,7 @@
     }
 
     &:last-of-type {
-        &:not(:first-of-type) {
+        &:not(:nth-of-type(2)) {
             border-top-left-radius: 0 !important;
             border-bottom-left-radius: 0 !important;
         }
@@ -101,4 +140,9 @@
 @keyframes AppExit {
     from { opacity: 1; transform: translateX(0); display: block; }
     to { opacity: 0; transform: translateX(-20px); display: none; }
+}
+
+@keyframes ServerOverlayEnter {
+    from { opacity: 0; height: 0px; display: none; }
+    to { opacity: 1; height: 120px; display: flex; }
 }
