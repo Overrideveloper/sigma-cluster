@@ -16,7 +16,7 @@
                 
                 <h3 class="app-short"><b>{{app.short_name[0]}}</b>{{app.short_name.slice(1)}}</h3>
                 <h6 class="app-name">{{app.name}}</h6>
-                <span class="app-started">Added a few seconds ago</span>
+                <span class="app-started">{{app.started | timeAgo | async }}</span>
             </div>
         </div>
     </div>
