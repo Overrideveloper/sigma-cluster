@@ -53,13 +53,15 @@ export class MainComponent {
     return SORT_LIST<IServer>(this.servers, 'index', 'asc');
   }
 
+  showMenu() {
+    const menu = document.getElementsByTagName('app-menu')[0] as HTMLElement;
+    menu.style.width = 'auto';
+    menu.style.display = 'block';
+  }
+
   setAppBlockGradient(server_id: string, app_server_id: string, index: number, gradient: string) {
     const appBlock: HTMLDivElement = document.getElementById(`server_${server_id}_app_${app_server_id}`) as HTMLDivElement;
     appBlock.style.background = gradient;
-  }
-
-  private addServer() {
-    this.servers.push({ index: this.servers.length + 1, id: GET_SERVER_ID(), modified: Date.now(), apps: [] });
   }
 
   removeServer(id?: number) {
@@ -87,6 +89,10 @@ export class MainComponent {
 
       throw new Error('Server cannot be located'); 
     }
+  }
+
+  private addServer() {
+    this.servers.push({ index: this.servers.length + 1, id: GET_SERVER_ID(), modified: Date.now(), apps: [] });
   }
 
   private startApp(app: IApp) {

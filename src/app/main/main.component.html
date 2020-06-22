@@ -1,5 +1,12 @@
 <div class="app-main">
-    <h2 class="title">Server Canvas</h2>
+    <div class="title-flex">
+        <a class="navbar-burger burger" (click)="showMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <h2 class="title">Server Canvas</h2>
+    </div>
 
     <div class="cluster">
         <div *ngFor="let server of clusterServers" class="server" [id]="'server_' + server.id">

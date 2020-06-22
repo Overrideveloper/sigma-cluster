@@ -4,6 +4,25 @@
     padding: 1rem 1.5rem;
 }
 
+.title-flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 0 24px 0;
+
+    .burger {
+        height: auto;
+        width: auto;
+        filter: invert(1);
+        display: none;
+        margin: 0 1rem 0 0.5rem;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+}
+
 .title {
     color: white;
     font-size: 20px;
@@ -145,4 +164,10 @@
 @keyframes ServerOverlayEnter {
     from { opacity: 0; height: 0px; display: none; }
     to { opacity: 1; height: 120px; display: flex; }
+}
+
+@media screen and (max-width: 600px) {
+    .burger {
+        display: block !important;
+    }
 }

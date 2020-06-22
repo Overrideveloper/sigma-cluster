@@ -1,0 +1,19 @@
+app-main {
+    width: 100%;
+}
+
+app-menu {
+    transition: all 1s ease-in-out;
+}
+
+.main-flex {
+    display: flex;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    app-menu {
+        width: 0;
+        display: none;
+    }
+}

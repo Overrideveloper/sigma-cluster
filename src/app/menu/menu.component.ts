@@ -15,6 +15,12 @@ export class MenuComponent {
     this.apps = APPS;
   }
 
+  closeMenu() {
+    const menu = document.getElementsByTagName('app-menu')[0] as HTMLElement;
+    menu.style.width = '0';
+    menu.style.display = 'none';
+  }
+
   addServer = () => SERVER_OPERATIONS.next('ADD');
   destroyServer = () => SERVER_OPERATIONS.next('DESTROY');
 
